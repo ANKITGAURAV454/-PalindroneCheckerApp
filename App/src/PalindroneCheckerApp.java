@@ -1,7 +1,6 @@
 import java.util.Scanner;
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class PalindromeCheckerApp {
 
@@ -12,23 +11,22 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        input = input.replaceAll("\\s+", "").toLowerCase();
+
+        Deque<Character> deque = new LinkedList<>();
 
         for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            queue.add(ch);   // enqueue (FIFO)
-            stack.push(ch);  // push (LIFO)
+            deque.addLast(input.charAt(i));
         }
 
         boolean isPalindrome = true;
 
-        while (!queue.isEmpty()) {
-            char fromQueue = queue.remove();
-            char fromStack = stack.pop();
-            if (fromQueue != fromStack) {
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+            if (front != rear) {
                 isPalindrome = false;
-                break; // stop immediately if mismatch
+                break; // stop immediately if mismatch found
             }
         }
 
